@@ -2,15 +2,13 @@ import queue
 
 def createMaze():
     maze = []
-    maze.append(["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"])
     maze.append(["#", "O", "#", " ", " ", " ", " ", " ", "#", " ", "#"])
-    maze.append(["#", " ", "#", " ", "#", "#", " ", " ", "#", " ", "#"])
+    maze.append(["#", " ", "#", " ", "#", "#", "#", " ", "#", " ", "#"])
     maze.append(["#", " ", "#", " ", "#", "X", " ", " ", "#", " ", "#"])
     maze.append(["#", " ", "#", " ", "#", "#", "#", " ", " ", " ", "#"])
     maze.append(["#", " ", " ", " ", " ", "#", " ", " ", " ", " ", "#"])
     maze.append(["#", " ", "#", " ", "#", "#", "#", " ", " ", " ", "#"])
     maze.append(["#", " ", "#", " ", " ", " ", " ", " ", " ", " ", "#"])
-    maze.append(["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"])
 
     return maze
 
@@ -109,6 +107,9 @@ add = ""
 maze = createMaze()
 
 while not findEnd(maze, add):
+    if nums.empty():  # If the queue is empty, break the loop
+        print("No valid path found.")
+        break
     add = nums.get()
     for j in ["L", "R", "U", "D"]:
         put = add + j
