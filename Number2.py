@@ -4,7 +4,7 @@ import random
 city_map = {
     'A': {'B': 12, 'C': 10, 'G': 12},
     'B': {'A': 12, 'C': 8, 'D': 12},
-    'C': {'A': 10, 'B': 8, 'D': 12, 'E': 3, 'G': 9},
+    'C': {'A': 10, 'B': 8, 'D': 11, 'E': 3, 'G': 9},
     'D': {'B': 12, 'C': 11, 'E': 11, 'F': 10},
     'E': {'C': 3, 'G': 7, 'F': 6, 'D': 11},
     'F': {'E': 6, 'G': 9, 'D': 10},
@@ -51,7 +51,16 @@ def crossover(parent1, parent2):
         if child[i] == -1:
             while parent2[pointer_p2] in child:
                 pointer_p2 += 1
-            child[i] = parent2[pointer_p2]
+            # Check if the city from parent2 has a direct path with the previous city in the child route
+            prev_city = child[i - 1] if i > 0 else child[-1]
+            if parent2[pointer_p2] in city_map[prev_city]:
+                child[i] = parent2[pointer_p2]
+            else:
+                # If not, find a city that has a direct path with the previous city
+                for city in cities:
+                    if city not in child and city in city_map[prev_city]:
+                        child[i] = city
+                        break
     return child
 
 def mutate(route):
