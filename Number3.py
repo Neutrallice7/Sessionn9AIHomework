@@ -2,7 +2,7 @@ board = {1: ' ', 2: ' ', 3: ' ',
          4: ' ', 5: ' ', 6: ' ',
          7: ' ', 8: ' ', 9: ' '}
 
-def printBoard(board):
+def BoardPrint(board):
     print(board[1]+ '|' + board[2] + '|' + board[3])
     print('-+-+-')
     print(board[4]+ '|' + board[5] + '|' + board[6])
@@ -11,15 +11,15 @@ def printBoard(board):
     print('-+-+-')
     print("\n")
 
-printBoard(board)
+BoardPrint(board)
 
-def spaceisFree(position):
+def FreeSpace(position):
     if(board[position]== ' '):
         return True
     else:
         return False
 
-def checkForWin():
+def WinCheck():
     if (board[1] == board[2] and board[1] == board[3] and board[1] != ' '):
         return True
     elif (board[4] == board[5] and board[4] == board[6] and board[4] != ' '):
@@ -59,7 +59,7 @@ def checkWhichMarkWon(mark):
     else:
         return False
 
-def checkDraw():
+def DrawCheck():
     for key in board.keys():
         if board[key] == ' ':
             return False
@@ -68,14 +68,14 @@ def checkDraw():
 
 def insertLetter(letter,position):
       
-    if spaceisFree(position):
+    if FreeSpace(position):
         board[position] = letter
-        printBoard(board)
-        if(checkDraw()):
+        BoardPrint(board)
+        if(DrawCheck()):
             print("Draw!")
             exit()
         
-        if checkForWin():
+        if WinCheck():
             if letter == 'X':
                 print("Bot wins!")
                 exit()
@@ -118,7 +118,7 @@ def minimax(board, depth, isMaximizing):
         return 1
     elif (checkWhichMarkWon(player)):
         return -1
-    elif (checkDraw()):
+    elif (DrawCheck()):
         return 0
 
     if (isMaximizing):
@@ -143,7 +143,7 @@ def minimax(board, depth, isMaximizing):
                     bestScore = score
         return bestScore
     
-while not checkForWin():
+while not WinCheck():
     compMove()
     playerMove()
         
